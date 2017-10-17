@@ -45,7 +45,8 @@ with open("test.md", "rt") as mdFile:
                 line = LINES[lineIndex]
                 while not HEADING_PATTERN.match(line) and not SUBHEADING_PATTERN.match(line):
                     subFile.write(line +"\n")
-
+                    if SUBSUBHEADING_PATTERN.match(line):
+                        subFile.write("---\n")
                     lineIndex += 1
                     if lineIndex < len(LINES):
                         line = LINES[lineIndex]
