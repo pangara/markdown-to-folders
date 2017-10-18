@@ -24,6 +24,10 @@ def markdown_to_eguide(markdown):
                 dirName = line[2:]
                 fileName = dirName + ".md"
                 mainFile = open(PAGES+"/"+fileName, "w")
+                mainFile.write("---\n")
+                mainFile.write("title: " + dirName + "\n")
+                mainFile.write("navtitle: " + dirName +"\n")
+                mainFile.write("---\n")
                 mainFile.write(line + "\n")
                 if not os.path.exists(PAGES+"/"+dirName):
                     os.makedirs(PAGES+"/"+dirName)
@@ -37,14 +41,16 @@ def markdown_to_eguide(markdown):
                         line = LINES[lineIndex]
                     else:
                         break
-            # Inside each of the folders make md files for each of the subsections and fill in content
+            # Inside each of the folders make md files for each of the
+            # subsections and fill in content
             if SUBHEADING_PATTERN.match(line):
-                subFile = open(PAGES+"/"+dirName + "/" + line[3:] + ".md", "w")
+                subFileName = line[3:]
+                subFile = open(PAGES+"/"+dirName + "/" + subFileName + ".md", "w")
                 subFile.write("---\n")
-                subFile.write("title: " + dirName + "\n")
-                subFile.write("navtitle: " + dirName +"\n")
+                subFile.write("title: " + subFileName + "\n")
+                subFile.write("navtitle: " + subFileName +"\n")
                 subFile.write("---\n")
-                subFile.write(line)
+                subFile.write(line + "\n")
                 lineIndex += 1
                 if lineIndex < len(LINES):
                     line = LINES[lineIndex]
